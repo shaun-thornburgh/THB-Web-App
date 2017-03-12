@@ -1,0 +1,40 @@
+<template name="mainLayout">
+    {{#if loggingIn}}
+    {{else}}
+        {{#if currentUser}}
+            <!-- Wrapper-->
+            <div id="wrapper">
+
+                <!-- Navigation -->
+                {{> navigation }}
+
+                <!-- Page wraper -->
+                <div id="page-wrapper" class="gray-bg">
+
+                    <!-- Page wrapper -->
+                    {{> topNavbar }}
+
+                    <!-- Main view  -->
+                    {{>Template.dynamic template=content}}
+
+                    <!-- Footer -->
+                    {{> footer }}
+
+                </div>
+                <!-- End page wrapper-->
+
+                <!-- Right Sidebar -->
+                {{> rightSidebar }}
+
+            </div>
+            <!-- End wrapper-->
+        {{else}}
+            {{#if not_logged_content}}
+                {{>Template.dynamic template=not_logged_content}}
+            {{else}}
+                {{>Template.dynamic template='login'}}
+            {{/if}}
+        {{/if}}
+    {{/if}}
+
+</template>

@@ -1,4 +1,4 @@
-Hare Boutique
+Hair Boutique
 
 Run the server using
 npm start

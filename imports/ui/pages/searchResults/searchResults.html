@@ -1,0 +1,50 @@
+<template name="searchResults">
+     <!-- Page heading -->
+    {{> pageHeading title='Results' category='Search' }}
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <h2>
+                            {{ overallCount }} results found for: <span class="text-navy">“{{ searchQuery }}”</span>
+                        </h2>
+
+                        <div class="search-form">
+                            <form method="get" id="search-form">
+                                <div class="input-group">
+                                    <input type="text" placeholder="Refine your search" name="search" class="form-control input-lg">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-lg btn-primary" type="submit">
+                                            Search
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="search-result-list">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i> Students ({{ studentsCount }})</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-briefcase"></i> School({{ schoolCount }})</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="">
+                                        {{> tabular table=TabularTables.SearchStudents selector=selectorStudents class="table-students"}}
+                                    </div>
+                                </div>
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="">
+                                        {{> tabular table=TabularTables.SearchSchools selector=selectorSchools class="table-schools"}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

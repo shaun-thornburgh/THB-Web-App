@@ -1,0 +1,11 @@
+{
+  "public": {
+  },
+  "fixtures":
+  {
+    "apply" : false,
+    "resetDatabase" : false,
+    "applyFixtures" : ["baseData"],
+    "exitAfterRun" : false
+  }
+}
