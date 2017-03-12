@@ -1,4 +1,4 @@
-Koru
+Hare Boutique
 
 Run the server using
 npm start
