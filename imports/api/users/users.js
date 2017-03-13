@@ -5,9 +5,6 @@ import faker from 'faker';
 import { Accounts } from 'meteor/accounts-base';
 
 
-//import { Invitations } from '/imports/api/invitations/invitations'
-
-
 Schema = {};
 
 Schema.User = new SimpleSchema({
@@ -57,21 +54,19 @@ Schema.User = new SimpleSchema({
         type: String,
         optional: true
     },
-    schoolId: {
+    phoneNumber: {
         type: String,
         optional: true
-    },
-
+    }
 });
 
 Meteor.users.attachSchema(Schema.User);
 
 export const UserSchema = Schema.User;
+
 export const ROLES = {
     ADMIN: "admin",
-    SCHOOLADMIN: "schooladmin",
-    GENERALUSER: "generaluser",
-    GOVERNMENTUSER: "governmentuser"
+    CUSTOMER: 'customer'
 };
 
 // Deny all client-side updates to user documents
@@ -92,25 +87,16 @@ Factory.define('user', Meteor.users, {
 
 if(Meteor.isServer) {
     Accounts.onCreateUser(function(options, user) {
-        console.log("On Create User")
-        if(options.firstName)
-        {
+        console.log("On Create User");
+        if(options.firstName) {
             user.firstName = options.firstName;
         }
-        if(options.firstName)
-        {
+        if(options.lastName) {
             user.lastName = options.lastName;
         }
-        if(options.schoolId)
-        {
-            user.schoolId = options.schoolId;
+        if(options.phoneNumber) {
+            user.phoneNumber = options.phoneNumber;
         }
-
-        if (options.email)
-        {
-            //Invitations.remove({email: options.email});
-        }
-
         return user;
     });
 }

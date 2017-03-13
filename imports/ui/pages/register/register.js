@@ -18,7 +18,7 @@ Template.register.events({
         // Trim and validate the input
         $('.ladda-button').ladda('start');
 
-        Accounts.createUser({profile:{firstName:firstName, lastName: lastName}, email: email, password : password}, function(err){
+        Accounts.createUser({firstName:firstName, lastName: lastName, email: email, password : password}, function(err){
             $('.ladda-button').ladda('stop');
             if (err) {
                 console.log("register failed");

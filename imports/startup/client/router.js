@@ -41,9 +41,7 @@ Tracker.autorun(() => {
     }
 });
 
-var SchoolSubs = new SubsManager();
-var FeatureSubs = new SubsManager();
-var LoggedInSubs = new SubsManager();
+export const LoggedInSubs = new SubsManager();
 
 var PublicGroup = FlowRouter.group();
 var LoggedinGroup = FlowRouter.group({
@@ -65,10 +63,6 @@ let NonLoggedinGroup = FlowRouter.group({
             redirect('/home');
         }
     }]
-});
-
-var SchoolAdminGroup = FlowRouter.group({
-    prefix: "/admin"
 });
 
 var AdminGroup = FlowRouter.group({
@@ -121,17 +115,6 @@ NonLoggedinGroup.route('/register', {
     }
 });
 
-
-PublicGroup.route('/invitations/:_token', {
-    action: function() {
-        BlazeLayout.render("blankLayout", {content: "invitationAccept"});
-    },
-    subscriptions: function(params, queryParams) {
-        this.register('invitationSingle', Meteor.subscribe('invitationSingle', {token: params._token}));
-    }
-});
-
-
 LoggedinGroup.route('/home', {
     action: function() {
         BlazeLayout.render("mainLayout", {content: "home"});
@@ -162,68 +145,59 @@ LoggedinGroup.route('/settings', {
 LoggedinGroup.route('/users', {
     action: function() {
         BlazeLayout.render("mainLayout", {content: "users"});
-    },
-    subscriptions: function(params, queryParams) {
-        this.register('schools', SchoolSubs.subscribe('schools'));
     }
 });
 
 LoggedinGroup.route('/users/new', {
     action: function() {
         BlazeLayout.render("mainLayout", {content: "editUser"});
-    },
-    subscriptions: function(params, queryParams) {
-        this.register('schools', SchoolSubs.subscribe('schools'));
     }
 });
 
 LoggedinGroup.route('/users/:_id/edit', {
     action: function() {
         BlazeLayout.render("mainLayout", {content: "editUser"});
-    },
-    subscriptions: function(params, queryParams) {
-        this.register('schools', SchoolSubs.subscribe('schools'));
-        this.register('userSingle', LoggedInSubs.subscribe('userSingle', {userId: params._id}));
     }
 });
 
-
-LoggedinGroup.route('/students', {
-    action: function() {
-        BlazeLayout.render("mainLayout", {content: "students"});
-    }
-});
-LoggedinGroup.route('/students/new', {
-    action: function() {
-        BlazeLayout.render("mainLayout", {content: "editStudent"});
-    },
-    subscriptions: function(params, queryParams) {
-        this.register('schools', SchoolSubs.subscribe('schools'));
-    }
-});
-LoggedinGroup.route('/students/:_id/edit', {
-    action: function() {
-        BlazeLayout.render("mainLayout", {content: "editStudent"});
-    },
-    subscriptions: function(params, queryParams) {
-        this.register('schools', SchoolSubs.subscribe('schools'));
-        this.register('studentSingle', LoggedInSubs.subscribe('studentSingle', {studentId: params._id}));
-    }
-});
-LoggedinGroup.route('/students/:_id/view', {
-    action: function() {
-        BlazeLayout.render("mainLayout", {content: "student"});
-    },
-    subscriptions: function(params, queryParams) {
-        this.register('schools', SchoolSubs.subscribe('schools'));
-        this.register('studentSingle', LoggedInSubs.subscribe('studentSingle', {studentId: params._id}));
-    }
-});
-LoggedinGroup.route('/student', {
-    action: function() {
-        BlazeLayout.render("mainLayout", {content: "student"});
-    }
-});
+//
+// LoggedinGroup.route('/students', {
+//     action: function() {
+//         BlazeLayout.render("mainLayout", {content: "students"});
+//     }
+// });
+//
+// LoggedinGroup.route('/students/new', {
+//     action: function() {
+//         BlazeLayout.render("mainLayout", {content: "editStudent"});
+//     },
+//     subscriptions: function(params, queryParams) {
+//         this.register('schools', SchoolSubs.subscribe('schools'));
+//     }
+// });
+// LoggedinGroup.route('/students/:_id/edit', {
+//     action: function() {
+//         BlazeLayout.render("mainLayout", {content: "editStudent"});
+//     },
+//     subscriptions: function(params, queryParams) {
+//         this.register('schools', SchoolSubs.subscribe('schools'));
+//         this.register('studentSingle', LoggedInSubs.subscribe('studentSingle', {studentId: params._id}));
+//     }
+// });
+// LoggedinGroup.route('/students/:_id/view', {
+//     action: function() {
+//         BlazeLayout.render("mainLayout", {content: "student"});
+//     },
+//     subscriptions: function(params, queryParams) {
+//         this.register('schools', SchoolSubs.subscribe('schools'));
+//         this.register('studentSingle', LoggedInSubs.subscribe('studentSingle', {studentId: params._id}));
+//     }
+// });
+// LoggedinGroup.route('/student', {
+//     action: function() {
+//         BlazeLayout.render("mainLayout", {content: "student"});
+//     }
+// });
 
 FlowRouter.notFound = {
     action: function() {

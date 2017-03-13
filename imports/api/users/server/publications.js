@@ -12,11 +12,11 @@ Meteor.publish("users", function () {
         this.ready();
         return;
     }
-    return Meteor.users.find({_id:{$ne: this.userId}}, {fields: {firstName: 1, lastName: 1, schoolId: 1, emails: 1, roles: 1}});
+    return Meteor.users.find({_id:{$ne: this.userId}}, {fields: {firstName: 1, lastName: 1, emails: 1, roles: 1}});
 });
 
 Meteor.publish(null, function() {
-    return Meteor.users.find({_id: this.userId}, {fields: {firstName: 1, lastName: 1, schoolId: 1}});
+    return Meteor.users.find({_id: this.userId}, {fields: {firstName: 1, lastName: 1}});
 });
 
 Meteor.publish("userSingle", function (params) {
@@ -31,5 +31,5 @@ Meteor.publish("userSingle", function (params) {
         this.ready();
         return;
     }
-    return Meteor.users.find({_id: userId}, {fields: {firstName: 1, lastName: 1, schoolId: 1, emails: 1, roles: 1}});
+    return Meteor.users.find({_id: userId}, {fields: {firstName: 1, lastName: 1, emails: 1, roles: 1}});
 });

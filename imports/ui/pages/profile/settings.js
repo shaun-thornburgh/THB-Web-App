@@ -5,7 +5,7 @@ Template.settings.rendered = function(){
 };
 
 Template.settings.helpers({
-})
+});
 
 
 Template.settings.events({
@@ -30,4 +30,4 @@ Template.settings.events({
             }
         });
     }
-})
+});

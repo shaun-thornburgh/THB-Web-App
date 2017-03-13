@@ -8,9 +8,6 @@ Template.dashboard.helpers({
   lastName: function() {
     return Meteor.user().lastName;
   },
-
-
-
     // For demo purpose
     // Example of notification list
     notifications : [
@@ -20,7 +17,6 @@ Template.dashboard.helpers({
         {number: 4, labelClass: 'default', content: 'Call back to Sylvia', time: '11:06 pm'},
         {number: 5, labelClass: 'primary', content: 'Write a letter to Sandra', time: '12:00 pm'}
     ]
-
 });
 
 Template.dashboard.rendered = function(){
@@ -31,8 +27,7 @@ Template.dashboard.rendered = function(){
             data: [300,50,100],
             backgroundColor: ["#a3e1d4","#dedede","#9CC3DA"]
         }]
-    } ;
-
+    };
 
     var doughnutOptions = {
         responsive: false,
@@ -40,7 +35,6 @@ Template.dashboard.rendered = function(){
             display: false
         }
     };
-
 
     var ctx4 = document.getElementById("doughnutChart").getContext("2d");
     new Chart(ctx4, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
@@ -51,8 +45,7 @@ Template.dashboard.rendered = function(){
             data: [70,27,85],
             backgroundColor: ["#a3e1d4","#dedede","#9CC3DA"]
         }]
-    } ;
-
+    };
 
     var doughnutOptions = {
         responsive: false,
@@ -60,7 +53,6 @@ Template.dashboard.rendered = function(){
             display: false
         }
     };
-
 
     var ctx4 = document.getElementById("doughnutChart2").getContext("2d");
     new Chart(ctx4, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
@@ -126,13 +118,13 @@ Template.dashboard.rendered = function(){
         width:100
     });
 
-    var updatingChart = $(".updating-chart").peity("line", { fill: '#1ab394',stroke:'#169c81', width: 64 })
+    var updatingChart = $(".updating-chart").peity("line", { fill: '#1ab394',stroke:'#169c81', width: 64 });
 
     setInterval(function() {
-        var random = Math.round(Math.random() * 10)
-        var values = updatingChart.text().split(",")
-        values.shift()
-        values.push(random)
+        var random = Math.round(Math.random() * 10);
+        var values = updatingChart.text().split(",");
+        values.shift();
+        values.push(random);
 
         updatingChart
             .text(values.join(","))

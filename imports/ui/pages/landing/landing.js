@@ -1,7 +1,6 @@
 import './landing.html'
 
 Template.landing.rendered = function(){
-
     $('body').addClass('landing-page');
     $('body').attr('id', 'page-top');
 

@@ -1,15 +1,12 @@
 import './home.html';
 
 Template.home.helpers({
-
   firstName: function() {
     return Meteor.user().firstName;
   },
   lastName: function() {
     return Meteor.user().lastName;
   },
-
-
 
     // For demo purpose
     // Example of notification list
@@ -20,7 +17,6 @@ Template.home.helpers({
         {number: 4, labelClass: 'default', content: 'Call back to Sylvia', time: '11:06 pm'},
         {number: 5, labelClass: 'primary', content: 'Write a letter to Sandra', time: '12:00 pm'}
     ]
-
 });
 
 Template.home.rendered = function(){
