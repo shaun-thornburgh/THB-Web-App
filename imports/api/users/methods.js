@@ -28,10 +28,50 @@ export const createTestAdminUser = new ValidatedMethod({
     }
 });
 
+export const registerUser = new ValidatedMethod({
+    name: 'users.register',
+    validate: new SimpleSchema({
+        firstName: UserSchema.schema('firstName'),
+        lastName: UserSchema.schema('lastName'),
+        email: UserSchema.schema('emails.$.address'),
+        password: { type: String}
+    }).validator({ clean: true, filter: false }),
+    run({ email, firstName, lastName, password, role}) {
+        console.log("INSERT USER CALLED");
+
+        const user = {
+            email,
+            firstName,
+            lastName,
+            password,
+            createdAt: new Date()
+        };
+
+        let newUserId = null;
+        try {
+            newUserId = Accounts.createUser(user);
+        } catch (err) {
+            console.log(err);
+            throw new Meteor.Error("users.insert", err.reason);
+        }
+        console.log("New User ID: " + newUserId);
+        if(Meteor.isServer) {
+            if (newUserId) {
+                Roles.addUsersToRoles(newUserId, [ROLES.CUSTOMER], Roles.GLOBAL_GROUP);
+            }
+            return newUserId;
+        }
+        if(Meteor.isClient)
+        {
+            console.log("This is client");
+            console.log(newUserId);
+        }
+    }
+});
+
 
 export const insertUser = new ValidatedMethod({
     name: 'users.insert',
-    //validate: UserSchema.pick(['username', 'firstName', 'lastName']).validator({ clean: true, filter: false }),
     validate: new SimpleSchema({
         firstName: UserSchema.schema('firstName'),
         lastName: UserSchema.schema('lastName'),
@@ -67,7 +107,7 @@ export const insertUser = new ValidatedMethod({
             }
             console.log("New User ID: " + newUserId);
             if (newUserId && role) {
-                Roles.addUsersToRoles(newUserId, [role], Roles.GLOBAL_GROUP);
+                Roles.addUsersToRoles(newUserId, [ROLES.CUSTOMER], Roles.GLOBAL_GROUP);
             }
             return newUserId;
         }
