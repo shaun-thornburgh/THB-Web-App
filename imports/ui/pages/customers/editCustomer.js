@@ -3,7 +3,7 @@ import './editCustomer.html'
 import { Roles } from 'meteor/alanning:roles';
 import { ROLES } from '/imports/api/users/users.js';
 
-import { insertUser, updateUser } from '../../../api/users/methods.js';
+import { insertUser, registerUser, updateUser } from '../../../api/users/methods.js';
 import { Modal } from 'meteor/peppelg:bootstrap-3-modal';
 
 Template.editCustomer.onCreated(function editCustomerPageOnCreated() {
@@ -34,24 +34,22 @@ Template.editCustomer.events({
         let password = event.target.password.value;
 
         const instance = Template.instance();
-        var user = instance.state.get('customer');
+        var new_customer = instance.state.get('customer');
 
         var userObj = {firstName: firstName, lastName: lastName, email: email};//, role: role
-        if(event.target.role)
-        {
+        if(event.target.role) {
             userObj.role = event.target.role.value;
+        } else {
+            userObj.role = ROLES.CUSTOMER;
         }
-        if(user.schoolId)
-        {
-            userObj.schoolId = user.schoolId;
-        }
-        if(password && password != "")
-        {
+
+        if(password && password != "") {
             userObj.password = password;
         }
+
         $(".ladda-button").ladda('start');
-        if(instance.getUserId())
-        {
+
+        if(instance.getUserId()) {
             //var userTemp = instance.state.get('user');
             userObj._id = instance.getUserId();
             delete userObj['email'];
@@ -62,15 +60,14 @@ Template.editCustomer.events({
                         toastr['error']("Updating user info failed. Try again.")
                     }
                     else {
-                        toastr['success']("User Info updated!")
+                        toastr['success']("User Info updated!");
                         FlowRouter.go("/customers");
                     }
 
                 }
             );
         }
-        else
-        {
+        else {
             const userId = insertUser.call(userObj, (error) => {
                     $(".ladda-button").ladda('stop');
                     if (error) {
@@ -78,27 +75,13 @@ Template.editCustomer.events({
                         toastr['error']("Adding user failed: " + error.reason)
                     }
                     else {
-                        toastr['success']("User inserted!")
+                        toastr['success']("User inserted!");
                         FlowRouter.go("/customers");
                     }
                 }
             );
             console.log(userId);
         }
-    },
-    'click .select-school': function(event)
-    {
-        const instance = Template.instance();
-        Modal.show('schoolSelectModal2',
-            {
-                onSchoolSelected(school) {
-                    console.log("onSchoolSelectedDone")
-                    var user = instance.state.get('user');
-                    user.schoolId = school._id;
-                    instance.state.set('user', user);
-                }
-            }
-        );
     },
     'change .role-select': function(event)
     {
@@ -112,8 +95,7 @@ Template.editCustomer.helpers({
     // We use #each on an array of one item so that the "list" template is
     // removed and a new copy is added when changing lists, which is
     // important for animation purposes.
-    pageTitle()
-    {
+    pageTitle() {
         const instance = Template.instance();
         if(instance.getUserId())
         {
@@ -121,8 +103,7 @@ Template.editCustomer.helpers({
         }
         return "New Customer"
     },
-    selectedRole(currentRole)
-    {
+    selectedRole(currentRole) {
         const instance = Template.instance();
         const user = instance.state.get('customer');
         return user && currentRole == user.role ? 'selected' : '';
@@ -131,50 +112,28 @@ Template.editCustomer.helpers({
         const instance = Template.instance();
         return instance.state.get('customer');
     },
-    schoolName() {
+    isPasswordRequired() {
         const instance = Template.instance();
-        const user = instance.state.get('customer');
-        if(user && user.schoolId)
-        {
-            const school = Schools.findOne({_id: user.schoolId});
-            return school.name;
-        }
-        return "None Selected";
-    },
-    isPasswordRequired()
-    {
-        const instance = Template.instance();
-        if(instance.getUserId())
-        {
+        if(instance.getUserId()) {
             return "";
-        }
-        else
-        {
+        } else {
             return "required"
         }
 
     },
-    passwordPlaceholderMessage()
-    {
+    passwordPlaceholderMessage() {
         const instance = Template.instance();
-        if(instance.getUserId())
-        {
+        if(instance.getUserId()) {
             return "Leave this blank not to change password";
-        }
-        else
-        {
+        } else {
             return "Password (Required)"
         }
     },
-    isDisabled()
-    {
+    isDisabled() {
         const instance = Template.instance();
-        if(instance.getUserId())
-        {
+        if(instance.getUserId()) {
             return "readonly";
-        }
-        else
-        {
+        } else {
             return "";
         }
     }

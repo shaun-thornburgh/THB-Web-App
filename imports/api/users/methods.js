@@ -105,7 +105,9 @@ export const insertUser = new ValidatedMethod({
                 console.log(err);
                 throw new Meteor.Error("users.insert", err.reason);
             }
+
             console.log("New User ID: " + newUserId);
+
             if (newUserId && role) {
                 Roles.addUsersToRoles(newUserId, [ROLES.CUSTOMER], Roles.GLOBAL_GROUP);
             }
