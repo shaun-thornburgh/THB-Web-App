@@ -25,7 +25,6 @@ Template.editCustomer.rendered = function(){
 };
 
 Template.editCustomer.events({
-
     'submit #form-customer': function(event){
         event.preventDefault();
 
@@ -179,5 +178,4 @@ Template.editCustomer.helpers({
             return "";
         }
     }
-
 });

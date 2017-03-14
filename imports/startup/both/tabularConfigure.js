@@ -5,9 +5,8 @@ import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { ROLES } from '/imports/api/users/users.js';
 
-if(Meteor.isClient)
-{
-
+if (Meteor.isClient) {
+    require('/imports/ui/components/customerItemActionCell.js');
 }
 
 TabularTables = {};
@@ -29,23 +28,13 @@ TabularTables.Customers = new Tabular.Table({
         {
             title: "Email",
             data: "emails[0].address"
+        },
+        {
+            title: "Action",
+            tmpl: Meteor.isClient && Template.customerItemActionCell
         }
     ],
-    selector(userId) {
-        // if (Roles.userIsInRole(userId, [ROLES.ADMIN], Roles.GLOBAL_GROUP))
-        // {
-        //     return {}
-        //     //return {_id:{$ne: userId}}
-        // }
-        // if (Roles.userIsInRole(userId, [ROLES.SCHOOLADMIN], Roles.GLOBAL_GROUP))
-        // {
-        //     var user = Meteor.users.findOne(userId);
-        //     //return {_id:{$ne: userId}, schoolId: user.schoolId};
-        //     return { schoolId: user.schoolId};
-        // }
-        console.log("HALA SELECTOR")
-        return { };//"roles.__global_roles__.$": ROLES.CUSTOMER
-    },
-    // extraFields: ['roles', 'schoolId', 'username'],
-    //dom: "tp"
+    selector() {
+        return {'roles.__global_roles__': ROLES.CUSTOMER};
+    }
 });

@@ -1,0 +1,19 @@
+<template name="customerItemActionCell">
+    <div class="btn-group">
+        {{#if isCurrentUser }}
+            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">No Action(Current User)<span class="caret"></span></button>
+        {{else}}
+            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">Action <span class="caret"></span></button>
+            {{#if isEditable }}
+                <ul class="dropdown-menu">
+                    <li role="menuitem"><a class="dropdown-item" href="/customer/{{ this._id }}/edit">EDIT</a></li>
+                    <li role="menuitem"><a class="dropdown-item button-remove">Remove</a></li>
+                </ul>
+            {{else}}
+                <ul class="dropdown-menu">
+                    <li role="menuitem">Don't have permission</li>
+                </ul>
+            {{/if}}
+        {{/if}}
+    </div>
+</template>
