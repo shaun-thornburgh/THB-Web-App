@@ -34,7 +34,7 @@ Meteor.methods({
 
         let adminObject = {
             username: 'admin',
-            email: 'john@chocolatekiwi.com',
+            email: 'john@hairboutique.com',
             password: 'admin',
             firstName: 'John',
             lastName: 'Malsher'
@@ -124,8 +124,7 @@ Meteor.methods({
                 password: "pass"
             };
             const customerId9 = registerUser.call(customer9);
-        }catch(err)
-        {
+        } catch(err) {
             console.log(err);
         }
 

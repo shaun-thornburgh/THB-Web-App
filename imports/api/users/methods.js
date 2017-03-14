@@ -84,7 +84,7 @@ export const insertUser = new ValidatedMethod({
         console.log("INSERT USER CALLED");
         if(Meteor.isServer) {
             if (!Roles.userIsInRole(this.userId, [ROLES.ADMIN], Roles.GLOBAL_GROUP)) {
-                throw new Meteor.Error("users.insert", "Not authorized to create new users");
+                throw new Meteor.Error("users.insert", "Not authorized to create new customers");
             }
 
             let currentUser = Meteor.users.findOne(this.userId);
@@ -201,7 +201,7 @@ const USERS_METHODS = _.pluck([
 ], 'name');
 
 if (Meteor.isServer) {
-    // Only allow 5 users operations per connection per second
+    // Only allow 5 customers operations per connection per second
     DDPRateLimiter.addRule({
         name(name) {
             return _.contains(USERS_METHODS, name);

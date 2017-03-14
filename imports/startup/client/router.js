@@ -25,8 +25,8 @@ import '../../ui/pages/profile/profile.js';
 import '../../ui/pages/profile/settings.js';
 
 
-import '../../ui/pages/users/users.js';
-import '../../ui/pages/users/editUser.js';
+import '../../ui/pages/customers/customers.js';
+import '../../ui/pages/customers/editCustomer.js';
 
 import { Roles } from 'meteor/alanning:roles';
 import { ROLES } from '/imports/api/users/users.js';
@@ -142,19 +142,19 @@ LoggedinGroup.route('/settings', {
 });
 
 
-LoggedinGroup.route('/users', {
+LoggedinGroup.route('/customers', {
     action: function() {
         BlazeLayout.render("mainLayout", {content: "users"});
     }
 });
 
-LoggedinGroup.route('/users/new', {
+LoggedinGroup.route('/customers/new', {
     action: function() {
         BlazeLayout.render("mainLayout", {content: "editUser"});
     }
 });
 
-LoggedinGroup.route('/users/:_id/edit', {
+LoggedinGroup.route('/customers/:_id/edit', {
     action: function() {
         BlazeLayout.render("mainLayout", {content: "editUser"});
     }

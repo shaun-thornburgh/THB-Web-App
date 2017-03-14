@@ -1,20 +1,13 @@
-import './editUser.html'
+import './editCustomer.html'
 
 import { Roles } from 'meteor/alanning:roles';
 import { ROLES } from '/imports/api/users/users.js';
 
-import { Students, SCHOOL_STUDENT_PERMISSIONS, SCHOOL_STUDENT_STATUS } from '../../../api/students/students.js';
 import { insertUser, updateUser } from '../../../api/users/methods.js';
-import { displayError } from '../../lib/errors.js';
-//import { Modal } from ''
 import { Modal } from 'meteor/peppelg:bootstrap-3-modal';
 
-Template.editUser.onCreated(function editUserPageOnCreated() {
+Template.editCustomer.onCreated(function editCustomerPageOnCreated() {
     this.getUserId = () => FlowRouter.getParam('_id');
-    //this.autorun(() => {
-    //    this.subscribe('schools');
-    //    this.subscribe('students',{_id: this.getStudentId});
-    //});
     this.state = new ReactiveDict();
     this.state.setDefault({
         user: {}
@@ -26,11 +19,11 @@ Template.editUser.onCreated(function editUserPageOnCreated() {
     }
 });
 
-Template.editUser.rendered = function(){
+Template.editCustomer.rendered = function(){
     $('.ladda-button').ladda();
 };
 
-Template.editUser.onRendered(function editStudentOnRendered() {
+Template.editCustomer.onRendered(function editStudentOnRendered() {
     this.autorun(() => {
         if (this.subscriptionsReady()) {
             console.log("editUser - subscriptionsReady");
@@ -47,7 +40,7 @@ Template.editUser.onRendered(function editStudentOnRendered() {
                     if ((Roles.userIsInRole(Meteor.userId(), [ROLES.SCHOOLADMIN], Roles.GLOBAL_GROUP) && userTemp.schoolId != Meteor.user().schoolId) || (!Roles.userIsInRole(Meteor.userId(), [ROLES.SCHOOLADMIN, ROLES.ADMIN], Roles.GLOBAL_GROUP)))
                     {
                         swal("Error!", "You don't have permission", "error");
-                        FlowRouter.go("/users");
+                        FlowRouter.go("/customers");
                         return;
                     }
                     if (Roles.userIsInRole(userTemp._id, [ROLES.SCHOOLADMIN], Roles.GLOBAL_GROUP))
@@ -65,7 +58,6 @@ Template.editUser.onRendered(function editStudentOnRendered() {
                     userTemp.email = userTemp.emails[0].address;
 
                     this.state.set('user', userTemp);
-
                 }
             }
             else
@@ -77,7 +69,7 @@ Template.editUser.onRendered(function editStudentOnRendered() {
 });
 
 
-Template.editUser.events({
+Template.editCustomer.events({
 
     'submit #form-user': function(event){
         event.preventDefault();
@@ -86,9 +78,6 @@ Template.editUser.events({
         let lastName = event.target.lastName.value;
         let email = event.target.email.value;
         let password = event.target.password.value;
-        //let role = event.target.role.value;
-        //console.log(event.target.schools);
-        //let schoolIds = $(event.target.schools).val();
 
         const instance = Template.instance();
         var user = instance.state.get('user');
@@ -120,7 +109,7 @@ Template.editUser.events({
                     }
                     else {
                         toastr['success']("User Info updated!")
-                        FlowRouter.go("/users");
+                        FlowRouter.go("/customers");
                     }
 
                 }
@@ -136,7 +125,7 @@ Template.editUser.events({
                     }
                     else {
                         toastr['success']("User inserted!")
-                        FlowRouter.go("/users");
+                        FlowRouter.go("/customers");
                     }
                 }
             );
@@ -163,9 +152,9 @@ Template.editUser.events({
         //user.role = event.target.value;
         //instance.state.set('user', user);
     }
-})
+});
 
-Template.editUser.helpers({
+Template.editCustomer.helpers({
     // We use #each on an array of one item so that the "list" template is
     // removed and a new copy is added when changing lists, which is
     // important for animation purposes.
@@ -238,12 +227,11 @@ Template.editUser.helpers({
     isEditingSchoolUser()
     {
         const instance = Template.instance();
-        if(!instance.getUserId())
-        {
+        if(!instance.getUserId()) {
             return true;
         }
-        if (Roles.userIsInRole(instance.getUserId(), [ROLES.SCHOOLADMIN, ROLES.GENERALUSER], Roles.GLOBAL_GROUP))
-        {
+
+        if (Roles.userIsInRole(instance.getUserId(), [ROLES.SCHOOLADMIN, ROLES.GENERALUSER], Roles.GLOBAL_GROUP)) {
             return true;
         }
         return false;

@@ -29,23 +29,23 @@
 
                 {{#if isSuperAdmin }}
                     <li class="{{isActivePath path='/home'}}">
-                        <a href="/home"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.home">Home</span> </a>
+                        <a href="/home">
+                            <i class="fa fa-dashboard"></i>
+                            <span class="nav-label" data-i18n="nav.home">Home</span>
+                        </a>
                     </li>
-                    <li class="{{isActivePath regex='/users'}}">
-                        <a href="/users"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.users">Users</span> </a>
-                    </li>
-                    <li class="{{isActivePath regex='/admin/schools'}}">
-                        <a href="/admin/schools"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.admin.schools">Schools</span> </a>
-                    </li>
-                    <li class="{{isActivePath regex='/admin/features'}}">
-                        <a href="/admin/features"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.admin.features">Features</span> </a>
+                    <li class="{{isActivePath regex='/customers'}}">
+                        <a href="/customers">
+                            <i class="fa fa-users"></i>
+                            <span class="nav-label" data-i18n="nav.users">Customers</span>
+                        </a>
                     </li>
                 {{/if}}
                 {{#if isSchoolAdmin }}
                     <li class="{{isActivePath path='/home'}}">
                         <a href="/home"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.home">Home</span> </a>
                     </li>
-                    <li class="{{isActivePath regex='/users'}}">
+                    <li class="{{isActivePath regex='/customers'}}">
                         <a href="/users"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.users">Users</span> </a>
                     </li>
                     <li class="{{isActivePath regex='/students'}}">
