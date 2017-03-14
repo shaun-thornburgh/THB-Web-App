@@ -144,19 +144,19 @@ LoggedinGroup.route('/settings', {
 
 LoggedinGroup.route('/customers', {
     action: function() {
-        BlazeLayout.render("mainLayout", {content: "users"});
+        BlazeLayout.render("mainLayout", {content: "customers"});
     }
 });
 
 LoggedinGroup.route('/customers/new', {
     action: function() {
-        BlazeLayout.render("mainLayout", {content: "editUser"});
+        BlazeLayout.render("mainLayout", {content: "editCustomer"});
     }
 });
 
 LoggedinGroup.route('/customers/:_id/edit', {
     action: function() {
-        BlazeLayout.render("mainLayout", {content: "editUser"});
+        BlazeLayout.render("mainLayout", {content: "editCustomer"});
     }
 });
 

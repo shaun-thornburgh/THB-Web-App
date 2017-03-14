@@ -7,6 +7,7 @@ import { insertUser, updateUser } from '../../../api/users/methods.js';
 import { Modal } from 'meteor/peppelg:bootstrap-3-modal';
 
 Template.editCustomer.onCreated(function editCustomerPageOnCreated() {
+    console.log('editCustomer.onCreated');
     this.getUserId = () => FlowRouter.getParam('_id');
     this.state = new ReactiveDict();
     this.state.setDefault({
@@ -23,55 +24,9 @@ Template.editCustomer.rendered = function(){
     $('.ladda-button').ladda();
 };
 
-Template.editCustomer.onRendered(function editStudentOnRendered() {
-    this.autorun(() => {
-        if (this.subscriptionsReady()) {
-            console.log("editUser - subscriptionsReady");
-            //$('.chosen-select').chosen({width: "100%"});
-            if(this.getUserId())
-            {// If edit
-
-                let userTemp = Meteor.users.findOne({_id: this.getUserId()});
-                if(userTemp)
-                {
-                    console.log(userTemp);
-                    console.log(Meteor.user().schoolId);
-
-                    if ((Roles.userIsInRole(Meteor.userId(), [ROLES.SCHOOLADMIN], Roles.GLOBAL_GROUP) && userTemp.schoolId != Meteor.user().schoolId) || (!Roles.userIsInRole(Meteor.userId(), [ROLES.SCHOOLADMIN, ROLES.ADMIN], Roles.GLOBAL_GROUP)))
-                    {
-                        swal("Error!", "You don't have permission", "error");
-                        FlowRouter.go("/customers");
-                        return;
-                    }
-                    if (Roles.userIsInRole(userTemp._id, [ROLES.SCHOOLADMIN], Roles.GLOBAL_GROUP))
-                    {
-                        userTemp.role = ROLES.SCHOOLADMIN;
-                    }
-                    if (Roles.userIsInRole(userTemp._id, [ROLES.ADMIN], Roles.GLOBAL_GROUP))
-                    {
-                        userTemp.role = ROLES.ADMIN;
-                    }
-                    if (Roles.userIsInRole(userTemp._id, [ROLES.GENERALUSER], Roles.GLOBAL_GROUP))
-                    {
-                        userTemp.role = ROLES.GENERALUSER;
-                    }
-                    userTemp.email = userTemp.emails[0].address;
-
-                    this.state.set('user', userTemp);
-                }
-            }
-            else
-            {
-                //this.state.set('student', Students.findOne({_id: this.getStudentId()}));
-            }
-        }
-    });
-});
-
-
 Template.editCustomer.events({
 
-    'submit #form-user': function(event){
+    'submit #form-customer': function(event){
         event.preventDefault();
 
         let firstName = event.target.firstName.value;
@@ -80,7 +35,7 @@ Template.editCustomer.events({
         let password = event.target.password.value;
 
         const instance = Template.instance();
-        var user = instance.state.get('user');
+        var user = instance.state.get('customer');
 
         var userObj = {firstName: firstName, lastName: lastName, email: email};//, role: role
         if(event.target.role)
@@ -163,23 +118,23 @@ Template.editCustomer.helpers({
         const instance = Template.instance();
         if(instance.getUserId())
         {
-            return "Edit User"
+            return "Edit Customer"
         }
-        return "New User"
+        return "New Customer"
     },
     selectedRole(currentRole)
     {
         const instance = Template.instance();
-        const user = instance.state.get('user');
+        const user = instance.state.get('customer');
         return user && currentRole == user.role ? 'selected' : '';
     },
     user() {
         const instance = Template.instance();
-        return instance.state.get('user');
+        return instance.state.get('customer');
     },
     schoolName() {
         const instance = Template.instance();
-        const user = instance.state.get('user');
+        const user = instance.state.get('customer');
         if(user && user.schoolId)
         {
             const school = Schools.findOne({_id: user.schoolId});
@@ -223,18 +178,6 @@ Template.editCustomer.helpers({
         {
             return "";
         }
-    },
-    isEditingSchoolUser()
-    {
-        const instance = Template.instance();
-        if(!instance.getUserId()) {
-            return true;
-        }
-
-        if (Roles.userIsInRole(instance.getUserId(), [ROLES.SCHOOLADMIN, ROLES.GENERALUSER], Roles.GLOBAL_GROUP)) {
-            return true;
-        }
-        return false;
     }
 
 });
