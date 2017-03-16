@@ -34,7 +34,7 @@ Meteor.methods({
 
         let adminObject = {
             username: 'admin',
-            email: 'john@hairboutique.com',
+            email: 'admin@hairboutique.com',
             password: 'admin',
             firstName: 'John',
             lastName: 'Malsher'

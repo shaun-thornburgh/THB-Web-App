@@ -24,7 +24,6 @@ import '../../ui/pages/register/register.js';
 import '../../ui/pages/profile/profile.js';
 import '../../ui/pages/profile/settings.js';
 
-
 import '../../ui/pages/customers/customers.js';
 import '../../ui/pages/customers/editCustomer.js';
 
@@ -68,19 +67,15 @@ let NonLoggedinGroup = FlowRouter.group({
 var AdminGroup = FlowRouter.group({
     prefix: "/admin",
     triggersEnter: [function(context, redirect) {
-        console.log(Meteor.userId());
-        console.log(Meteor.user());
         if (!Meteor.userId()) {
             var route = FlowRouter.current();
-            if(route.route.name != 'login')
-            {
+            if(route.route.name != 'login') {
                 Session.set("redirectAfterLogin", route.path);
                 redirect('/login');
             }
         }
         else {
-            if (!Roles.userIsInRole(Meteor.userId(), [ROLES.ADMIN], Roles.GLOBAL_GROUP))
-            {
+            if (!Roles.userIsInRole(Meteor.userId(), [ROLES.ADMIN], Roles.GLOBAL_GROUP)) {
                 redirect('/home');
             }
         }
@@ -142,21 +137,24 @@ LoggedinGroup.route('/settings', {
 });
 
 
-LoggedinGroup.route('/customers', {
+AdminGroup.route('/customers', {
     action: function() {
         BlazeLayout.render("mainLayout", {content: "customers"});
     }
 });
 
-LoggedinGroup.route('/customers/new', {
+AdminGroup.route('/customers/new', {
     action: function() {
         BlazeLayout.render("mainLayout", {content: "editCustomer"});
     }
 });
 
-LoggedinGroup.route('/customers/:_id/edit', {
+AdminGroup.route('/customers/:_id/edit', {
     action: function() {
         BlazeLayout.render("mainLayout", {content: "editCustomer"});
+    },
+    subscriptions: function(params, queryParams) {
+        this.register('userSingle', LoggedInSubs.subscribe('userSingle', {userId: params._id}));
     }
 });
 

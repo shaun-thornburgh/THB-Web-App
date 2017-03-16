@@ -187,8 +187,8 @@ export const removeUser = new ValidatedMethod({
             throw new Meteor.Error("users.remove", "Not authorized to remove");
         }
         const user = Meteor.users.findOne(_id);
-        if(user) {
-            Meteor.call("schools.evaluate.updatestatus", {schoolId: user.schoolId});
+        if(!user) {
+            throw new Meteor.Error("users.remove", "User not found!");
         }
         Meteor.users.remove(_id);
     },

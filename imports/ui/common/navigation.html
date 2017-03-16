@@ -29,89 +29,19 @@
 
                 {{#if isSuperAdmin }}
                     <li class="{{isActivePath path='/home'}}">
-                        <a href="/home">
+                        <a href="/admin/home">
                             <i class="fa fa-dashboard"></i>
                             <span class="nav-label" data-i18n="nav.home">Home</span>
                         </a>
                     </li>
                     <li class="{{isActivePath regex='/customers'}}">
-                        <a href="/customers">
+                        <a href="/admin/customers">
                             <i class="fa fa-users"></i>
                             <span class="nav-label" data-i18n="nav.users">Customers</span>
                         </a>
                     </li>
                 {{/if}}
-                {{#if isSchoolAdmin }}
-                    <li class="{{isActivePath path='/home'}}">
-                        <a href="/home"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.home">Home</span> </a>
-                    </li>
-                    <li class="{{isActivePath regex='/customers'}}">
-                        <a href="/users"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.users">Users</span> </a>
-                    </li>
-                    <li class="{{isActivePath regex='/students'}}">
-                        <a href="/students"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.students">Students</span> </a>
-                    </li>
-                    <li class="{{isActivePath regex='/account'}}">
-                        <a href="/account"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.account">Account</span> </a>
-                    </li>
-
-                    <!-- Features -->
-                    <li class="{{isActivePath regex='votes|features'}}">
-                        <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Features</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse {{isActivePath regex='votes|features' className='in'}}">
-                            <li class="{{isActivePath regex='votes|features'}}"><a href="/votes">Votes</a></li>
-                        </ul>
-                    </li>
-                    <!-- END Features -->
-                    <!-- Premium -->
-                    <li class="{{isActivePath regex='informe|premium'}}">
-                        <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Premium</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse {{isActivePath regex='informe|premium' className='in'}}">
-                            <li class="{{isActivePath regex='informe|premium'}}"><a href="/informe">InforMe</a></li>
-                        </ul>
-                    </li>
-                    <!-- END Premium -->
-                {{/if}}
-                {{#if isSchoolGeneralUser }}
-
-                    <!--From here is the General School User-->
-                    <li class="{{isActivePath path='/home'}}">
-                        <a href="/home"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.home">Home</span> </a>
-                    </li>
-                    <li class="{{isActivePath regex='/students'}}">
-                        <a href="/students"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.students">Students</span> </a>
-                    </li>
-
-                    <!-- Features -->
-                    <li class="{{isActivePath regex='votes|features'}}">
-                        <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Features</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse {{isActivePath regex='votes|features' className='in'}}">
-                            <li class="{{isActivePath regex='votes|features'}}"><a href="/votes">Votes</a></li>
-                        </ul>
-                    </li>
-                    <!-- END Features -->
-                    <!-- Premium -->
-                    <li class="{{isActivePath regex='informe|premium'}}">
-                        <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Premium</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse {{isActivePath regex='informe|premium' className='in'}}">
-                            <li class="{{isActivePath regex='informe|premium'}}"><a href="/informe">InforMe</a></li>
-                        </ul>
-                    </li>
-                    <!-- END Premium -->
-                {{/if}}
-                {{#if isGovernmentUser }}
-
-                    <!--From here is the General School User-->
-                    <li class="{{isActivePath path='/home'}}">
-                        <a href="/home"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.home">Home</span> </a>
-                    </li>
-                    <li class="{{isActivePath regex='/informe'}}">
-                        <a href="/informe"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.informe">InfoMe</span> </a>
-                    </li>
-                {{/if}}
-
             </ul>
-
         </div>
     </nav>
 </template>

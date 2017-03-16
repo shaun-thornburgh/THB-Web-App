@@ -11,18 +11,45 @@ Template.editCustomer.onCreated(function editCustomerPageOnCreated() {
     this.getUserId = () => FlowRouter.getParam('_id');
     this.state = new ReactiveDict();
     this.state.setDefault({
-        user: {}
+        customer: {}
     });
 
     if(this.getUserId())
     {// If edit
-        this.state.set('user', Meteor.users.findOne({_id: this.getUserId()}));
+        this.state.set('customer', Meteor.users.findOne({_id: this.getUserId()}));
     }
 });
 
 Template.editCustomer.rendered = function(){
     $('.ladda-button').ladda();
 };
+
+Template.editCustomer.onRendered(function editCustomerOnRendered() {
+    this.autorun(() => {
+        if (this.subscriptionsReady()) {
+            console.log("editCustomer - subscriptionsReady");
+            if(this.getUserId())
+            {// If edit
+                let userTemp = Meteor.users.findOne({_id: this.getUserId()});
+                if(userTemp) {
+                    console.log(userTemp);
+                    console.log(Meteor.user()._id);
+
+                    if (Roles.userIsInRole(userTemp._id, [ROLES.ADMIN], Roles.GLOBAL_GROUP)) {
+                        userTemp.role = ROLES.ADMIN;
+                    }
+
+                    userTemp.email = userTemp.emails[0].address;
+
+                    this.state.set('customer', userTemp);
+                }
+            }
+            else {
+                //this.state.set('student', Students.findOne({_id: this.getStudentId()}));
+            }
+        }
+    });
+});
 
 Template.editCustomer.events({
     'submit #form-customer': function(event){
@@ -61,7 +88,7 @@ Template.editCustomer.events({
                     }
                     else {
                         toastr['success']("User Info updated!");
-                        FlowRouter.go("/customers");
+                        FlowRouter.go("/admin/customers");
                     }
 
                 }
@@ -80,7 +107,7 @@ Template.editCustomer.events({
                     }
                 }
             );
-            console.log(userId);
+            // console.log(userId);
         }
     },
     'change .role-select': function(event)
@@ -97,8 +124,7 @@ Template.editCustomer.helpers({
     // important for animation purposes.
     pageTitle() {
         const instance = Template.instance();
-        if(instance.getUserId())
-        {
+        if(instance.getUserId()) {
             return "Edit Customer"
         }
         return "New Customer"
@@ -108,8 +134,9 @@ Template.editCustomer.helpers({
         const user = instance.state.get('customer');
         return user && currentRole == user.role ? 'selected' : '';
     },
-    user() {
+    customer() {
         const instance = Template.instance();
+        console.log(instance.state.get('customer'));
         return instance.state.get('customer');
     },
     isPasswordRequired() {

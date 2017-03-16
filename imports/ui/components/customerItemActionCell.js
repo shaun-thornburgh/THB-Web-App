@@ -5,6 +5,7 @@ import { _ } from 'meteor/underscore';
 
 import { Roles } from 'meteor/alanning:roles';
 import { ROLES } from '/imports/api/users/users.js';
+import { removeUser } from '/imports/api/users/methods.js'
 
 import './customerItemActionCell.html';
 
@@ -12,6 +13,13 @@ Template.customerItemActionCell.onCreated(function customerItemEditCellOnCreated
 });
 
 Template.customerItemActionCell.events({
+    'click .button-remove' (event) {
+        removeUser.call({_id: this._id}, function(err, response) {
+            if(err) {
+                console.log("ERROR : ", err);
+            }
+        });
+    }
 });
 
 Template.customerItemActionCell.helpers({

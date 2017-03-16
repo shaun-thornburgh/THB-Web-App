@@ -7,8 +7,7 @@ import { UserSchema, ROLES } from '../users.js';
 import { Roles } from 'meteor/alanning:roles';
 
 Meteor.publish("users", function () {
-    if (!Roles.userIsInRole(this.userId, [ROLES.ADMIN], Roles.GLOBAL_GROUP))
-    {
+    if (!Roles.userIsInRole(this.userId, [ROLES.ADMIN], Roles.GLOBAL_GROUP)) {
         this.ready();
         return;
     }
@@ -25,9 +24,7 @@ Meteor.publish("userSingle", function (params) {
     }).validate(params);
     const { userId } = params;
 
-    //TODO: Will need to provide more sophisticated permission checking
-    if(!this.userId)
-    {
+    if(!this.userId) {
         this.ready();
         return;
     }
