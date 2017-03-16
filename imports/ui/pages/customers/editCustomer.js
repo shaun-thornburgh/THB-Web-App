@@ -103,7 +103,7 @@ Template.editCustomer.events({
                     }
                     else {
                         toastr['success']("User inserted!");
-                        FlowRouter.go("/customers");
+                        FlowRouter.go("/admin/customers");
                     }
                 }
             );
